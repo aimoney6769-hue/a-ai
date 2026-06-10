@@ -1,0 +1,1 @@
+<iframe src="https://claude.site/public/artifacts/58ead591-aaf9-4567-a54e-e66bd84eafa5/embed" title="ponto-do-acai.html" width="100%" height="600" frameborder="0" allow="clipboard-write" allowfullscreen></iframe>
