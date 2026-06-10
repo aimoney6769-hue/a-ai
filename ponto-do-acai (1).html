@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ponto do Açaí de Roma · Lisboa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --purple-deep: #1E0630;
+    --purple-mid:  #5A1060;
+    --berry:       #8B1A6B;
+    --berry-light: #C2457A;
+    --cream:       #FDF6EC;
+    --cream-dark:  #F5EBD8;
+    --gold:        #E8B84B;
+    --green:       #2A7A4B;
+    --green-light: #4CAF75;
+    --white:       #FFFFFF;
+    --text-dark:   #1A0828;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px;
+    background: transparent;
+    transition: background 0.4s, backdrop-filter 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(30, 6, 48, 0.92);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--cream);
+    letter-spacing: 0.02em;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    color: rgba(253,246,236,0.75);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    background: var(--gold);
+    color: var(--purple-deep);
+    border: none; cursor: pointer;
+    padding: 10px 24px;
+    border-radius: 40px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(232,184,75,0.4); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    background: var(--purple-deep);
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero-bg-orbs { position: absolute; inset: 0; pointer-events: none; }
+  .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.45; }
+  .orb-1 { width: 500px; height: 500px; background: var(--berry); top: -100px; right: -100px; }
+  .orb-2 { width: 350px; height: 350px; background: var(--purple-mid); bottom: 0; left: 20%; }
+  .orb-3 { width: 200px; height: 200px; background: var(--green); bottom: 80px; right: 20%; opacity: 0.3; }
+
+  .hero-text {
+    padding: 140px 48px 80px 10vw;
+    position: relative; z-index: 2;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(232,184,75,0.15);
+    border: 1px solid rgba(232,184,75,0.4);
+    color: var(--gold);
+    font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 7px 16px; border-radius: 40px;
+    margin-bottom: 32px;
+  }
+  .hero-eyebrow svg { width: 14px; height: 14px; }
+  .hero-h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.02;
+    color: var(--cream);
+    margin-bottom: 24px;
+  }
+  .hero-h1 em { font-style: italic; color: var(--berry-light); display: block; }
+  .hero-sub {
+    font-size: 1.05rem; font-weight: 300;
+    color: rgba(253,246,236,0.65);
+    line-height: 1.7; max-width: 400px;
+    margin-bottom: 48px;
+  }
+  .hero-actions { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--gold); color: var(--purple-deep);
+    border: none; cursor: pointer;
+    padding: 16px 36px; border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700; font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(232,184,75,0.45); }
+  .btn-ghost {
+    color: rgba(253,246,236,0.7); font-size: 0.9rem; font-weight: 500;
+    display: flex; align-items: center; gap: 8px;
+    text-decoration: none; transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--cream); }
+  .btn-ghost svg { transition: transform 0.2s; }
+  .btn-ghost:hover svg { transform: translateX(4px); }
+
+  .hero-rating { margin-top: 60px; display: flex; align-items: center; gap: 20px; }
+  .rating-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem; font-weight: 900;
+    color: var(--cream); line-height: 1;
+  }
+  .rating-details { display: flex; flex-direction: column; gap: 4px; }
+  .stars { color: var(--gold); font-size: 1.1rem; letter-spacing: 2px; }
+  .rating-count { font-size: 0.8rem; color: rgba(253,246,236,0.5); letter-spacing: 0.06em; text-transform: uppercase; }
+
+  /* ── BOWL + TOPPINGS ── */
+  .hero-visual {
+    display: flex; align-items: center; justify-content: center;
+    padding: 140px 10vw 80px 20px;
+    position: relative; z-index: 2;
+  }
+  .bowl-wrap { position: relative; width: 360px; height: 360px; }
+  .bowl-glow {
+    position: absolute; inset: -40px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(139,26,107,0.5) 0%, transparent 70%);
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+  @keyframes pulse-glow {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.08); opacity: 1; }
+  }
+  .bowl-svg { width: 100%; height: 100%; filter: drop-shadow(0 20px 60px rgba(139,26,107,0.6)); }
+
+  .topping {
+    position: absolute;
+    animation: float 4s ease-in-out infinite;
+    width: 52px; height: 52px;
+  }
+  .topping:nth-child(2) { top: 4%; left: 2%; animation-delay: 0s; }
+  .topping:nth-child(3) { top: 8%; right: -2%; animation-delay: 0.8s; }
+  .topping:nth-child(4) { bottom: 12%; left: -4%; animation-delay: 1.6s; }
+  .topping:nth-child(5) { bottom: 6%; right: 4%; animation-delay: 2.4s; }
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-14px) rotate(8deg); }
+  }
+
+  /* ── SOBRE NÓS ── */
+  #sobre {
+    background: var(--cream);
+    padding: 120px 10vw;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+  }
+  .section-label {
+    font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--berry); margin-bottom: 20px;
+  }
+  .section-h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-weight: 900; line-height: 1.1;
+    color: var(--purple-deep); margin-bottom: 24px;
+  }
+  .section-h2 em { font-style: italic; color: var(--berry); }
+  .section-body { font-size: 1rem; font-weight: 300; line-height: 1.8; color: #4A3060; margin-bottom: 20px; }
+  .sobre-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+  .stat { background: var(--purple-deep); border-radius: 16px; padding: 28px 20px; text-align: center; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 900; color: var(--gold); line-height: 1; margin-bottom: 8px; }
+  .stat-label { font-size: 0.75rem; font-weight: 500; color: rgba(253,246,236,0.6); letter-spacing: 0.06em; text-transform: uppercase; }
+  .sobre-image-block { position: relative; }
+  .sobre-card {
+    background: var(--purple-deep); border-radius: 24px;
+    padding: 56px 40px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .sobre-card-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(139,26,107,0.6) 0%, transparent 65%);
+  }
+  .sobre-card-icon { display: flex; justify-content: center; margin-bottom: 24px; position: relative; }
+  .sobre-card-icon svg { width: 72px; height: 72px; }
+  .sobre-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 700;
+    color: var(--cream); margin-bottom: 12px; position: relative;
+  }
+  .sobre-card-text { font-size: 0.9rem; font-weight: 300; color: rgba(253,246,236,0.65); line-height: 1.7; position: relative; }
+  .badge-float {
+    position: absolute; top: -16px; right: -16px;
+    background: var(--gold); color: var(--purple-deep);
+    font-weight: 700; font-size: 0.75rem;
+    padding: 10px 18px; border-radius: 40px;
+    letter-spacing: 0.04em;
+    box-shadow: 0 4px 20px rgba(232,184,75,0.5);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .badge-float svg { width: 14px; height: 14px; }
+
+  /* ── MENU ── */
+  #menu {
+    background: var(--purple-deep);
+    padding: 120px 10vw;
+    position: relative; overflow: hidden;
+  }
+  #menu::before {
+    content: '';
+    position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+    width: 800px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(139,26,107,0.35) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .menu-header { text-align: center; margin-bottom: 72px; position: relative; z-index: 1; }
+  .menu-header .section-label { color: var(--gold); }
+  .menu-header .section-h2 { color: var(--cream); }
+  .menu-header .section-h2 em { color: var(--berry-light); }
+  .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; position: relative; z-index: 1; }
+  .menu-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px; padding: 36px 28px;
+    transition: transform 0.3s, background 0.3s, border-color 0.3s;
+    cursor: default;
+  }
+  .menu-card:hover { transform: translateY(-6px); background: rgba(139,26,107,0.2); border-color: rgba(139,26,107,0.5); }
+  .menu-card-icon { width: 52px; height: 52px; margin-bottom: 20px; display: block; }
+  .menu-card-icon svg { width: 100%; height: 100%; }
+  .menu-card-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--cream); margin-bottom: 10px; }
+  .menu-card-desc { font-size: 0.85rem; font-weight: 300; color: rgba(253,246,236,0.55); line-height: 1.65; margin-bottom: 20px; }
+  .menu-card-price {
+    display: inline-block; font-size: 0.85rem; font-weight: 600;
+    color: var(--gold); background: rgba(232,184,75,0.12);
+    border: 1px solid rgba(232,184,75,0.3); padding: 5px 14px; border-radius: 30px;
+  }
+  .menu-card.featured { background: var(--berry); border-color: transparent; }
+  .menu-card.featured:hover { background: #9E2078; border-color: transparent; }
+  .menu-card.featured .menu-card-desc { color: rgba(253,246,236,0.75); }
+
+  /* ── REVIEWS ── */
+  #reviews { background: var(--cream-dark); padding: 120px 0; overflow: hidden; }
+  .reviews-inner { padding: 0 10vw; }
+  .reviews-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 56px; }
+  .reviews-rating-big { display: flex; align-items: center; gap: 24px; }
+  .big-num { font-family: 'Playfair Display', serif; font-size: 6rem; font-weight: 900; color: var(--purple-deep); line-height: 1; }
+  .big-stars { color: var(--gold); font-size: 1.6rem; letter-spacing: 4px; display: block; margin-bottom: 4px; }
+  .big-count { font-size: 0.8rem; color: #7A6090; letter-spacing: 0.1em; text-transform: uppercase; }
+  .reviews-scroll { display: flex; gap: 24px; overflow-x: auto; padding: 0 10vw 20px; scrollbar-width: none; cursor: grab; }
+  .reviews-scroll::-webkit-scrollbar { display: none; }
+  .review-card { flex: 0 0 340px; background: var(--white); border-radius: 20px; padding: 32px 28px; box-shadow: 0 4px 24px rgba(90,16,96,0.07); position: relative; }
+  .review-quote-icon { position: absolute; top: 20px; right: 24px; width: 32px; height: 32px; opacity: 0.2; }
+  .review-stars { color: var(--gold); font-size: 0.9rem; letter-spacing: 3px; margin-bottom: 14px; }
+  .review-text { font-size: 0.92rem; line-height: 1.7; color: #3D2555; font-weight: 300; margin-bottom: 20px; }
+  .review-author { display: flex; align-items: center; gap: 12px; }
+  .review-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--purple-mid); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 600; color: var(--cream); flex-shrink: 0; }
+  .review-name { font-size: 0.85rem; font-weight: 600; color: var(--purple-deep); }
+  .review-meta { font-size: 0.75rem; color: #9A80B0; }
+
+  /* ── LOCALIZAÇÃO ── */
+  #localizacao { background: var(--cream); padding: 120px 10vw; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .info-list { list-style: none; display: flex; flex-direction: column; gap: 24px; margin: 40px 0; }
+  .info-item { display: flex; align-items: flex-start; gap: 18px; }
+  .info-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--purple-deep); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .info-icon svg { width: 22px; height: 22px; }
+  .info-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--berry); margin-bottom: 4px; }
+  .info-value { font-size: 0.95rem; color: var(--purple-deep); font-weight: 400; line-height: 1.5; }
+  .info-value a { color: var(--purple-deep); text-decoration: underline; text-underline-offset: 3px; }
+  .map-placeholder { background: var(--purple-deep); border-radius: 24px; overflow: hidden; aspect-ratio: 1/1; position: relative; display: flex; align-items: center; justify-content: center; }
+  .map-pin-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
+  .map-pin-svg { width: 56px; height: 56px; animation: bounce 2s ease-in-out infinite; }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  .map-address { font-family: 'Playfair Display', serif; font-size: 0.95rem; color: var(--cream); text-align: center; max-width: 200px; line-height: 1.5; }
+  .map-open-btn { margin-top: 8px; background: var(--gold); color: var(--purple-deep); border: none; cursor: pointer; padding: 10px 24px; border-radius: 30px; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; transition: transform 0.2s; }
+  .map-open-btn:hover { transform: translateY(-2px); }
+
+  /* ── FOOTER ── */
+  footer { background: var(--purple-deep); padding: 64px 10vw 40px; border-top: 1px solid rgba(255,255,255,0.06); }
+  .footer-top { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 32px; }
+  .footer-brand .nav-logo { font-size: 1.4rem; display: block; margin-bottom: 12px; }
+  .footer-tagline { font-size: 0.85rem; color: rgba(253,246,236,0.45); max-width: 220px; line-height: 1.6; }
+  .footer-links h4 { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+  .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .footer-links a { color: rgba(253,246,236,0.55); text-decoration: none; font-size: 0.88rem; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--cream); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; }
+  .footer-copy { font-size: 0.8rem; color: rgba(253,246,236,0.3); }
+  .footer-website { font-size: 0.8rem; color: rgba(253,246,236,0.4); text-decoration: none; transition: color 0.2s; }
+  .footer-website:hover { color: var(--gold); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    #hero { grid-template-columns: 1fr; text-align: center; }
+    .hero-text { padding: 120px 24px 40px; }
+    .hero-sub { max-width: 100%; }
+    .hero-actions { justify-content: center; }
+    .hero-rating { justify-content: center; }
+    .hero-visual { padding: 20px 24px 80px; }
+    .bowl-wrap { width: 260px; height: 260px; }
+    #sobre { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+    #menu { padding: 80px 24px; }
+    .menu-grid { grid-template-columns: 1fr; }
+    #reviews { padding: 80px 0; }
+    .reviews-inner { padding: 0 24px; }
+    .reviews-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+    .reviews-scroll { padding: 0 24px 20px; }
+    #localizacao { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+    footer { padding: 48px 24px 32px; }
+    .footer-top { flex-direction: column; gap: 40px; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, .orb, .topping, .bowl-glow, .map-pin-svg { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">Ponto do <span>Açaí</span> de Roma</div>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#reviews">Críticas</a></li>
+    <li><a href="#localizacao">Localização</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('localizacao').scrollIntoView({behavior:'smooth'})">Como Chegar</button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div class="hero-text">
+    <div class="hero-eyebrow">
+      <!-- Star SVG -->
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      4,8 de 5 — 68 Críticas Google
+    </div>
+    <h1 class="hero-h1">
+      O Melhor<br>
+      <em>Açaí</em><br>
+      de Lisboa.
+    </h1>
+    <p class="hero-sub">Autêntico açaí brasileiro, preparado com amor, no coração de Lisboa. Fresco, cremoso e irresistível — cada tigela é uma viagem ao Brasil.</p>
+    <div class="hero-actions">
+      <a href="#menu" class="btn-primary">Ver o Menu</a>
+      <a href="#localizacao" class="btn-ghost">
+        Encontra-nos
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="hero-rating">
+      <span class="rating-number">4,8</span>
+      <div class="rating-details">
+        <span class="stars">★★★★★</span>
+        <span class="rating-count">68 avaliações verificadas</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="bowl-wrap">
+      <div class="bowl-glow"></div>
+
+      <!-- Topping 1: Strawberry SVG -->
+      <svg class="topping" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="30" rx="18" ry="16" fill="#E53935"/>
+        <path d="M18 22 Q14 12 20 10 Q22 18 26 16 Q30 18 32 10 Q38 12 34 22" fill="#C62828"/>
+        <path d="M20 10 Q26 4 32 10" fill="#2E7D32" stroke="none"/>
+        <circle cx="20" cy="30" r="1.5" fill="#FFCDD2" opacity="0.6"/>
+        <circle cx="30" cy="26" r="1.5" fill="#FFCDD2" opacity="0.6"/>
+        <circle cx="26" cy="34" r="1.5" fill="#FFCDD2" opacity="0.6"/>
+      </svg>
+
+      <!-- Topping 2: Banana SVG -->
+      <svg class="topping" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 36 Q14 16 32 12 Q44 10 46 18 Q44 20 40 18 Q28 16 20 32 Q16 40 12 38 Z" fill="#FDD835"/>
+        <path d="M10 36 Q12 38 14 37 Q16 36 20 32 Q28 16 40 18 Q42 19 43 20 Q38 14 32 13 Q14 15 10 36Z" fill="#F9A825" opacity="0.5"/>
+        <path d="M46 18 Q48 16 46 14 Q44 12 42 14 Q44 16 46 18Z" fill="#795548"/>
+      </svg>
+
+      <!-- Topping 3: Blueberry SVG -->
+      <svg class="topping" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="26" cy="28" r="16" fill="#3949AB"/>
+        <circle cx="26" cy="28" r="16" fill="url(#bluegrad)"/>
+        <defs><radialGradient id="bluegrad" cx="35%" cy="30%"><stop offset="0%" stop-color="#5C6BC0"/><stop offset="100%" stop-color="#283593"/></radialGradient></defs>
+        <path d="M22 14 Q26 12 30 14" fill="none" stroke="#1A237E" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M24 13 Q26 10 28 13" fill="#388E3C"/>
+        <circle cx="20" cy="26" r="3" fill="rgba(255,255,255,0.12)"/>
+      </svg>
+
+      <!-- Topping 4: Coconut slice SVG -->
+      <svg class="topping" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="26" cy="26" r="20" fill="#5D4037"/>
+        <circle cx="26" cy="26" r="16" fill="#EFEBE9"/>
+        <circle cx="26" cy="26" r="10" fill="#BCAAA4"/>
+        <circle cx="26" cy="26" r="5" fill="#8D6E63"/>
+        <path d="M26 10 L26 6 M38 14 L41 11 M42 26 L46 26 M38 38 L41 41 M26 42 L26 46 M14 38 L11 41 M10 26 L6 26 M14 14 L11 11" stroke="#4E342E" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+
+      <!-- Main bowl SVG -->
+      <svg class="bowl-svg" viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="180" cy="310" rx="110" ry="18" fill="rgba(0,0,0,0.3)"/>
+        <path d="M70 165 Q75 280 180 295 Q285 280 290 165 Z" fill="#2D0A3F" stroke="#5A1060" stroke-width="2"/>
+        <path d="M78 175 Q80 270 180 283 Q280 270 282 175 Z" fill="#6B1560"/>
+        <ellipse cx="180" cy="178" rx="102" ry="18" fill="#8B1A6B"/>
+        <ellipse cx="180" cy="178" rx="80" ry="12" fill="#9E2278" opacity="0.7"/>
+        <!-- Granola ring -->
+        <path d="M100 176 Q102 166 115 162 Q130 158 148 160 Q162 157 174 158 Q186 157 198 160 Q216 158 231 162 Q244 166 246 176" fill="none" stroke="#C8882A" stroke-width="6" stroke-linecap="round"/>
+        <!-- Strawberry slice -->
+        <ellipse cx="140" cy="162" rx="14" ry="9" fill="#E84040" transform="rotate(-20,140,162)"/>
+        <path d="M134 158 Q140 152 146 158" fill="#2A7A4B" stroke="none"/>
+        <!-- Banana slice -->
+        <ellipse cx="210" cy="160" rx="16" ry="10" fill="#F5D020" transform="rotate(10,210,160)"/>
+        <!-- Blueberries -->
+        <circle cx="167" cy="158" r="8" fill="#2A2090"/>
+        <circle cx="185" cy="155" r="7" fill="#3530B0"/>
+        <circle cx="178" cy="163" r="6" fill="#2A2090"/>
+        <!-- Honey drizzle -->
+        <path d="M230 168 Q228 178 232 185 Q228 192 230 198" fill="none" stroke="#E8B84B" stroke-width="3" stroke-linecap="round"/>
+        <!-- Coconut flakes -->
+        <ellipse cx="155" cy="168" rx="8" ry="3" fill="#F5F5F5" transform="rotate(30,155,168)" opacity="0.85"/>
+        <ellipse cx="200" cy="170" rx="7" ry="2.5" fill="#F5F5F5" transform="rotate(-20,200,170)" opacity="0.85"/>
+        <!-- Bowl rim -->
+        <ellipse cx="180" cy="165" rx="110" ry="19" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+        <!-- Bowl base -->
+        <path d="M150 290 Q180 302 210 290 L215 300 Q180 314 145 300 Z" fill="#1A0420"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE NÓS -->
+<section id="sobre">
+  <div>
+    <div class="section-label">A nossa história</div>
+    <h2 class="section-h2">Feito com paixão,<br><em>servido com alma</em></h2>
+    <p class="section-body">Nascemos da saudade do Brasil e da vontade de partilhar o melhor do açaí com Lisboa. Na Av. Óscar Monteiro Torres, cada tigela é preparada na hora, com ingredientes frescos e sem compromissos.</p>
+    <p class="section-body">Somos conhecidos pela simpatia, rapidez e pela consistência que nos torna únicos na cidade. Aqui em casa, ninguém quer outro!</p>
+    <div class="sobre-stats">
+      <div class="stat">
+        <div class="stat-num">4,8★</div>
+        <div class="stat-label">Avaliação Google</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">68+</div>
+        <div class="stat-label">Críticas 5 estrelas</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">5–10€</div>
+        <div class="stat-label">Preço por pessoa</div>
+      </div>
+    </div>
+  </div>
+  <div class="sobre-image-block">
+    <div class="sobre-card">
+      <div class="sobre-card-bg"></div>
+      <div class="badge-float">
+        <!-- Leaf SVG -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1E0630" stroke-width="2" stroke-linecap="round"><path d="M12 22c0 0-8-4-8-12 4 0 8 2 8 2s4-2 8-2c0 8-8 12-8 12z"/></svg>
+        100% Natural
+      </div>
+      <div class="sobre-card-icon">
+        <!-- Açaí jar SVG -->
+        <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="24" width="32" height="36" rx="6" fill="#8B1A6B"/>
+          <rect x="20" y="24" width="32" height="36" rx="6" fill="url(#jargrad)"/>
+          <defs><linearGradient id="jargrad" x1="20" y1="24" x2="52" y2="60" gradientUnits="userSpaceOnUse"><stop stop-color="#C2457A"/><stop offset="1" stop-color="#5A1060"/></linearGradient></defs>
+          <rect x="18" y="20" width="36" height="8" rx="4" fill="#E8B84B"/>
+          <rect x="22" y="18" width="28" height="6" rx="3" fill="#F0C84B"/>
+          <!-- Açaí fill inside jar -->
+          <path d="M22 38 Q36 34 50 38 L50 56 Q36 58 22 56 Z" fill="#2D0A3F" opacity="0.4"/>
+          <!-- Shine -->
+          <rect x="24" y="26" width="6" height="18" rx="3" fill="rgba(255,255,255,0.15)"/>
+        </svg>
+      </div>
+      <div class="sobre-card-title">Açaí Autêntico</div>
+      <p class="sobre-card-text">Polpa pura de açaí, sem corantes nem conservantes artificiais. O sabor do Brasil, direto à tua tigela em Lisboa.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="menu-header">
+    <div class="section-label">O que servimos</div>
+    <h2 class="section-h2">A nossa <em>carta</em></h2>
+  </div>
+  <div class="menu-grid">
+
+    <!-- Açaí Clássico -->
+    <div class="menu-card featured">
+      <div class="menu-card-icon">
+        <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 22 Q12 38 26 42 Q40 38 42 22 Z" fill="#FDF6EC" opacity="0.9"/>
+          <ellipse cx="26" cy="22" rx="16" ry="6" fill="#C2457A"/>
+          <ellipse cx="26" cy="22" rx="12" ry="4" fill="#E86090" opacity="0.7"/>
+          <ellipse cx="19" cy="20" rx="5" ry="3" fill="#E84040" transform="rotate(-15,19,20)"/>
+          <ellipse cx="33" cy="19" rx="5" ry="3" fill="#F5D020" transform="rotate(10,33,19)"/>
+          <circle cx="26" cy="19" r="3" fill="#3949AB"/>
+          <path d="M14 21 Q16 17 20 16 Q26 15 32 16 Q36 17 38 21" fill="none" stroke="#C8882A" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="menu-card-name">Açaí Clássico</div>
+      <p class="menu-card-desc">A nossa receita original — polpa de açaí cremosa, banana, granola crocante e mel. A favorita de sempre.</p>
+      <span class="menu-card-price">A partir de 5€</span>
+    </div>
+
+    <!-- Açaí com Frutas -->
+    <div class="menu-card">
+      <div class="menu-card-icon">
+        <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Strawberry -->
+          <ellipse cx="16" cy="28" rx="10" ry="12" fill="#E53935"/>
+          <path d="M11 18 Q16 14 21 18" fill="#2E7D32"/>
+          <circle cx="14" cy="27" r="1" fill="#FFCDD2" opacity="0.7"/>
+          <circle cx="18" cy="31" r="1" fill="#FFCDD2" opacity="0.7"/>
+          <!-- Kiwi slice -->
+          <circle cx="32" cy="22" r="10" fill="#66BB6A"/>
+          <circle cx="32" cy="22" r="7" fill="#F1F8E9"/>
+          <circle cx="32" cy="22" r="4" fill="#A5D6A7"/>
+          <line x1="32" y1="15" x2="32" y2="29" stroke="#388E3C" stroke-width="0.8"/>
+          <line x1="25" y1="22" x2="39" y2="22" stroke="#388E3C" stroke-width="0.8"/>
+          <!-- Mango piece -->
+          <path d="M22 34 Q28 30 36 34 Q34 42 28 43 Q22 42 22 34Z" fill="#FFA726"/>
+          <path d="M24 35 Q28 32 34 35" fill="none" stroke="#FF8F00" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="menu-card-name">Açaí com Frutas</div>
+      <p class="menu-card-desc">Morangos frescos, kiwi e manga sobre uma base cremosa de açaí. Tropical e refrescante.</p>
+      <span class="menu-card-price">A partir de 6€</span>
+    </div>
+
+    <!-- Açaí Power -->
+    <div class="menu-card">
+      <div class="menu-card-icon">
+        <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Peanut butter swirl -->
+          <circle cx="26" cy="26" r="18" fill="#8D6E63"/>
+          <path d="M14 20 Q20 16 26 20 Q32 16 38 20 Q38 32 26 38 Q14 32 14 20Z" fill="#A1887F"/>
+          <path d="M20 22 Q26 19 32 22 Q30 30 26 32 Q22 30 20 22Z" fill="#C8A97B"/>
+          <!-- Chia seeds -->
+          <circle cx="20" cy="28" r="1.5" fill="#37474F"/>
+          <circle cx="26" cy="24" r="1.5" fill="#37474F"/>
+          <circle cx="32" cy="28" r="1.5" fill="#37474F"/>
+          <circle cx="24" cy="32" r="1.2" fill="#37474F"/>
+          <!-- Energy bolt -->
+          <path d="M28 16 L23 26 L27 26 L22 36 L31 24 L27 24 Z" fill="#E8B84B" opacity="0.9"/>
+        </svg>
+      </div>
+      <div class="menu-card-name">Açaí Power</div>
+      <p class="menu-card-desc">Para os que precisam de energia — pasta de amendoim, granola proteica, banana e sementes de chia.</p>
+      <span class="menu-card-price">A partir de 7€</span>
+    </div>
+
+    <!-- Bowl Antioxidante -->
+    <div class="menu-card">
+      <div class="menu-card-icon">
+        <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Blueberry cluster -->
+          <circle cx="18" cy="30" r="9" fill="#3949AB"/>
+          <circle cx="18" cy="30" r="9" fill="url(#bg1)"/>
+          <defs><radialGradient id="bg1" cx="30%" cy="25%"><stop stop-color="#5C6BC0"/><stop offset="1" stop-color="#283593"/></radialGradient></defs>
+          <path d="M14 22 Q18 20 22 22" fill="none" stroke="#1A237E" stroke-width="1.2" stroke-linecap="round"/>
+          <!-- Blackberry -->
+          <circle cx="32" cy="24" r="8" fill="#4A148C"/>
+          <circle cx="30" cy="22" r="3" fill="#6A1B9A"/>
+          <circle cx="34" cy="22" r="3" fill="#6A1B9A"/>
+          <circle cx="32" cy="26" r="3" fill="#6A1B9A"/>
+          <!-- Physalis -->
+          <circle cx="34" cy="36" r="6" fill="#FF8F00"/>
+          <path d="M28 30 Q31 28 36 30 Q38 36 34 40 Q30 40 28 36 Z" fill="none" stroke="#F57F17" stroke-width="1" opacity="0.6"/>
+          <!-- Coconut shreds -->
+          <path d="M14 38 Q18 36 20 38" stroke="#EFEBE9" stroke-width="2" stroke-linecap="round"/>
+          <path d="M16 41 Q20 39 22 41" stroke="#EFEBE9" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="menu-card-name">Bowl Antioxidante</div>
+      <p class="menu-card-desc">Açaí com mirtilo, amora, physalis e coco ralado. Rico em antioxidantes e absolutamente delicioso.</p>
+      <span class="menu-card-price">A partir de 7€</span>
+    </div>
+
+    <!-- Açaí Tropical -->
+    <div class="menu-card">
+      <div class="menu-card-icon">
+        <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Coconut half -->
+          <path d="M10 28 Q10 44 26 44 Q42 44 42 28 Q42 16 26 16 Q10 16 10 28Z" fill="#5D4037"/>
+          <path d="M12 28 Q12 42 26 42 Q40 42 40 28 Q40 18 26 18 Q12 18 12 28Z" fill="#EFEBE9"/>
+          <!-- Pineapple chunk -->
+          <rect x="18" y="20" width="10" height="12" rx="2" fill="#FDD835"/>
+          <path d="M18 22 L28 22 M18 24 L28 24 M18 26 L28 26 M18 28 L28 28 M18 30 L28 30" stroke="#F9A825" stroke-width="0.8"/>
+          <path d="M20 18 L22 20 M23 17 L24 20 M26 18 L25 20" stroke="#2E7D32" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Passion fruit -->
+          <circle cx="34" cy="30" r="7" fill="#AB47BC"/>
+          <circle cx="34" cy="30" r="5" fill="#CE93D8"/>
+          <circle cx="34" cy="30" r="3" fill="#F3E5F5"/>
+          <line x1="34" y1="25" x2="34" y2="35" stroke="#7B1FA2" stroke-width="0.8"/>
+          <line x1="29" y1="30" x2="39" y2="30" stroke="#7B1FA2" stroke-width="0.8"/>
+        </svg>
+      </div>
+      <div class="menu-card-name">Açaí Tropical</div>
+      <p class="menu-card-desc">Coco fresco, abacaxi e maracujá com base de açaí. Fecha os olhos e estás no Brasil.</p>
+      <span class="menu-card-price">A partir de 6€</span>
+    </div>
+
+    <!-- Personalizado -->
+    <div class="menu-card">
+      <div class="menu-card-icon">
+        <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Sparkle / custom icon -->
+          <circle cx="26" cy="26" r="18" fill="rgba(232,184,75,0.15)" stroke="#E8B84B" stroke-width="1.5"/>
+          <!-- Big star -->
+          <path d="M26 14 L28.5 21.5 L36 21.5 L30 26.5 L32.5 34 L26 29.5 L19.5 34 L22 26.5 L16 21.5 L23.5 21.5 Z" fill="#E8B84B"/>
+          <!-- Small sparkles -->
+          <path d="M40 12 L41 15 L44 16 L41 17 L40 20 L39 17 L36 16 L39 15 Z" fill="#E8B84B" opacity="0.6"/>
+          <path d="M12 32 L13 34.5 L15.5 35.5 L13 36.5 L12 39 L11 36.5 L8.5 35.5 L11 34.5 Z" fill="#E8B84B" opacity="0.6"/>
+          <circle cx="38" cy="32" r="2" fill="#E8B84B" opacity="0.5"/>
+          <circle cx="14" cy="16" r="1.5" fill="#E8B84B" opacity="0.5"/>
+        </svg>
+      </div>
+      <div class="menu-card-name">Cria o Teu Bowl</div>
+      <p class="menu-card-desc">Escolhe a tua base, os toppings e o mel. A tigela perfeita, do teu jeito.</p>
+      <span class="menu-card-price">Personalizado</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="reviews-inner">
+    <div class="reviews-header">
+      <div>
+        <div class="section-label">O que dizem de nós</div>
+        <h2 class="section-h2">Críticas<br><em>dos nossos clientes</em></h2>
+      </div>
+      <div class="reviews-rating-big">
+        <span class="big-num">4,8</span>
+        <div>
+          <span class="big-stars">★★★★★</span>
+          <span class="big-count">68 Críticas Google</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="reviews-scroll" id="reviewsScroll">
+
+    <div class="review-card">
+      <svg class="review-quote-icon" viewBox="0 0 32 32" fill="none"><path d="M6 14 Q6 6 14 6 L14 10 Q10 10 10 14 L14 14 L14 22 L6 22 Z M18 14 Q18 6 26 6 L26 10 Q22 10 22 14 L26 14 L26 22 L18 22 Z" fill="#C2457A"/></svg>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">Sem dúvida, o melhor açaí de Lisboa! Fui atendido por uma senhora extremamente simpática. Preparou tudo com muita rapidez e qualidade. Recomendo vivamente!</p>
+      <div class="review-author">
+        <div class="review-avatar">IO</div>
+        <div><div class="review-name">Ismael Ouazzani</div><div class="review-meta">Guia Local · há 5 meses</div></div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <svg class="review-quote-icon" viewBox="0 0 32 32" fill="none"><path d="M6 14 Q6 6 14 6 L14 10 Q10 10 10 14 L14 14 L14 22 L6 22 Z M18 14 Q18 6 26 6 L26 10 Q22 10 22 14 L26 14 L26 22 L18 22 Z" fill="#C2457A"/></svg>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">Aqui em casa ninguém quer outro! Altamente recomendado; lugar feliz, gente adorável e o açaí mais delicioso de Lisboa. Uma experiência incrível.</p>
+      <div class="review-author">
+        <div class="review-avatar">CG</div>
+        <div><div class="review-name">Carlos Gabriel</div><div class="review-meta">há um ano</div></div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <svg class="review-quote-icon" viewBox="0 0 32 32" fill="none"><path d="M6 14 Q6 6 14 6 L14 10 Q10 10 10 14 L14 14 L14 22 L6 22 Z M18 14 Q18 6 26 6 L26 10 Q22 10 22 14 L26 14 L26 22 L18 22 Z" fill="#C2457A"/></svg>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">O melhor açaí que já provei em qualquer canto de Portugal — super saboroso e consistente, atendimento perfeito. Mil razões para voltar!</p>
+      <div class="review-author">
+        <div class="review-avatar">CG</div>
+        <div><div class="review-name">Carlos Gabriel</div><div class="review-meta">há um ano</div></div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <svg class="review-quote-icon" viewBox="0 0 32 32" fill="none"><path d="M6 14 Q6 6 14 6 L14 10 Q10 10 10 14 L14 14 L14 22 L6 22 Z M18 14 Q18 6 26 6 L26 10 Q22 10 22 14 L26 14 L26 22 L18 22 Z" fill="#C2457A"/></svg>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">Pedi um açaí para provar — estava bem gostoso, não estava congelado como alguns. O tempo de espera foi curto e o atendimento muito bom. Vou voltar!</p>
+      <div class="review-author">
+        <div class="review-avatar">MS</div>
+        <div><div class="review-name">Matheus Schilipack</div><div class="review-meta">Guia Local · há 9 meses</div></div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <svg class="review-quote-icon" viewBox="0 0 32 32" fill="none"><path d="M6 14 Q6 6 14 6 L14 10 Q10 10 10 14 L14 14 L14 22 L6 22 Z M18 14 Q18 6 26 6 L26 10 Q22 10 22 14 L26 14 L26 22 L18 22 Z" fill="#C2457A"/></svg>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">Atendimento excelente, produtos de qualidade, super recomendo! Uma das melhores experiências gastronómicas que tive em Lisboa. Voltarei sempre!</p>
+      <div class="review-author">
+        <div class="review-avatar">AP</div>
+        <div><div class="review-name">Ana Paula</div><div class="review-meta">há 7 meses</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- LOCALIZAÇÃO -->
+<section id="localizacao">
+  <div>
+    <div class="section-label">Onde estamos</div>
+    <h2 class="section-h2">Visita-nos<br><em>em Roma, Lisboa</em></h2>
+    <ul class="info-list">
+
+      <li class="info-item">
+        <div class="info-icon">
+          <!-- Pin SVG -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#E8B84B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3" fill="#E8B84B" stroke="none"/></svg>
+        </div>
+        <div class="info-content">
+          <div class="info-label">Morada</div>
+          <div class="info-value">Av. Óscar Monteiro Torres, 63<br>1000-218 Lisboa</div>
+        </div>
+      </li>
+
+      <li class="info-item">
+        <div class="info-icon">
+          <!-- Clock SVG -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#E8B84B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+        </div>
+        <div class="info-content">
+          <div class="info-label">Horário</div>
+          <div class="info-value">Segunda a Domingo<br>12:00 — 21:00</div>
+        </div>
+      </li>
+
+      <li class="info-item">
+        <div class="info-icon">
+          <!-- Euro SVG -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#E8B84B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 10H4m0 4h10M17 6a7 7 0 1 0 0 12"/></svg>
+        </div>
+        <div class="info-content">
+          <div class="info-label">Preço médio</div>
+          <div class="info-value">5 — 10€ por pessoa</div>
+        </div>
+      </li>
+
+      <li class="info-item">
+        <div class="info-icon">
+          <!-- Globe SVG -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#E8B84B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M2 12h20M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10A15 15 0 0 1 8 12 15 15 0 0 1 12 2z"/></svg>
+        </div>
+        <div class="info-content">
+          <div class="info-label">Website</div>
+          <div class="info-value"><a href="https://pontodoacai.pt" target="_blank">pontodoacai.pt</a></div>
+        </div>
+      </li>
+
+    </ul>
+    <a href="https://maps.google.com/?q=Av.+Óscar+Monteiro+Torres+63,+1000-218+Lisboa" target="_blank" class="btn-primary">Abrir no Google Maps</a>
+  </div>
+
+  <div class="map-placeholder">
+    <div class="map-pin-overlay">
+      <!-- Animated pin SVG -->
+      <svg class="map-pin-svg" viewBox="0 0 56 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M28 4 C14 4 4 14 4 28 C4 46 28 68 28 68 C28 68 52 46 52 28 C52 14 42 4 28 4Z" fill="#E8B84B"/>
+        <path d="M28 4 C14 4 4 14 4 28 C4 46 28 68 28 68 C28 68 52 46 52 28 C52 14 42 4 28 4Z" fill="url(#pingrad)"/>
+        <defs><linearGradient id="pingrad" x1="4" y1="4" x2="52" y2="68" gradientUnits="userSpaceOnUse"><stop stop-color="#F0C84B"/><stop offset="1" stop-color="#C8882A"/></linearGradient></defs>
+        <circle cx="28" cy="28" r="10" fill="#1E0630"/>
+        <circle cx="28" cy="28" r="6" fill="#8B1A6B"/>
+        <circle cx="25" cy="25" r="2.5" fill="rgba(255,255,255,0.3)"/>
+      </svg>
+      <div class="map-address">Av. Óscar Monteiro Torres 63, Lisboa</div>
+      <a href="https://maps.google.com/?q=Av.+Óscar+Monteiro+Torres+63,+1000-218+Lisboa" target="_blank" class="map-open-btn">Ver no Mapa</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="nav-logo">Ponto do <span>Açaí</span> de Roma</span>
+      <p class="footer-tagline">O melhor açaí de Lisboa, feito com amor e servido com alegria.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Navegar</h4>
+      <ul>
+        <li><a href="#sobre">Sobre Nós</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#reviews">Críticas</a></li>
+        <li><a href="#localizacao">Localização</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Contacto</h4>
+      <ul>
+        <li><a href="https://pontodoacai.pt" target="_blank">pontodoacai.pt</a></li>
+        <li><a href="https://maps.google.com/?q=Av.+Óscar+Monteiro+Torres+63,+1000-218+Lisboa" target="_blank">Direções</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 Ponto do Açaí de Roma · Lisboa, Portugal</p>
+    <a href="https://pontodoacai.pt" class="footer-website">pontodoacai.pt</a>
+  </div>
+</footer>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  const scroll = document.getElementById('reviewsScroll');
+  let isDown = false, startX, left;
+  scroll.addEventListener('mousedown', e => { isDown = true; scroll.style.cursor = 'grabbing'; startX = e.pageX - scroll.offsetLeft; left = scroll.scrollLeft; });
+  scroll.addEventListener('mouseleave', () => { isDown = false; scroll.style.cursor = 'grab'; });
+  scroll.addEventListener('mouseup', () => { isDown = false; scroll.style.cursor = 'grab'; });
+  scroll.addEventListener('mousemove', e => { if (!isDown) return; e.preventDefault(); scroll.scrollLeft = left - (e.pageX - scroll.offsetLeft - startX); });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.menu-card, .review-card, .stat, .info-item').forEach(el => {
+    el.style.opacity = '0'; el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
